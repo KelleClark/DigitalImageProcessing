@@ -60,7 +60,7 @@ def opencv_img(count):
     columns[count] = str(image.shape[1])
     rows[count] = str(image.shape[0])
     pixels[count] = str(image.shape[1] * image.shape[0])
-    scale = min(get_args().rows / image.shape[0], get_args().cols / image.shape[1])
+    scale = min(1, min(get_args().rows / image.shape[0], get_args().cols / image.shape[1]))
     srcTri = np.array([[0, 0], [image.shape[1] - 1, 0], [0, image.shape[0] - 1]]).astype(np.float32)
     dstTri = np.array( [[0, 0], [int(image.shape[1] * scale), 0], [0, int(image.shape[0] * scale)]] ).astype(np.float32)
     warp_mat = cv2.getAffineTransform(srcTri, dstTri)
