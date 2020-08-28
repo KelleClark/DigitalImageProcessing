@@ -22,7 +22,7 @@ count = 0
 
 # Get and parse the arguments
 def get_args():
-    parser = argparse.ArgumentParser(description='Image browser')
+    parser = argparse.ArgumentParser(description='Image browser v1.0')
     parser.add_argument('path', metavar='dir',
                         help='The root directory to view photos in')
     parser.add_argument('--rows', type=int,  default=720,
