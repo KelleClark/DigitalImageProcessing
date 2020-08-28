@@ -87,7 +87,6 @@ def meta(event):
     global count
     impath  = images[count]
     info = os.lstat(impath)
-    print(info)
     showinfo("Image Metadata", info)
 
 # Go to next image    
