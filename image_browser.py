@@ -11,8 +11,9 @@ import filetype
 
 # set up an a list for files
 images = []
-
+# to store the image file types
 filetypes = []
+#??
 columns = []
 rows = []
 pixels = []
@@ -43,7 +44,8 @@ def load_path(path):
             pos_img = dirName + "/" + fname
             if cv2.haveImageReader(pos_img): # if it is a readable image
                 images.append(pos_img)  #add it to the list of images
-                filetypes.append(filetype.guess(pos_img).mime)
+                filetypes.append(filetype.guess(pos_img).mime) #Get the file type and save it
+                #???
                 columns.append("")
                 rows.append("")
                 pixels.append("")
@@ -51,8 +53,8 @@ def load_path(path):
     if len(images) == 0:
         print("Invalid path or there are no images in path")
         sys.exit(1)
-    
- 
+
+
 # Load the first image from the directory as opencv
 def opencv_img(count):
     # read and convert image
@@ -81,7 +83,6 @@ def convert_img(image):
 def load_img(count):
     return convert_img(opencv_img(count))
 
-
 # Show metadata
 def meta(event):
     global count
@@ -89,7 +90,17 @@ def meta(event):
     info = os.lstat(impath)
     showinfo("Image Metadata", info)
 
-# Go to next image    
+# Update the information about the newest photo and the image itself
+#   on the window
+def update_window(imgtk, tex):
+        label['image'] = imgtk
+        label['text'] = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+" x "+ \
+        rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+ \
+        filetypes[count]+ "\nFile size: "+str(os.lstat(images[count]).st_size)\
+        +" bytes"
+        label.photo = imgtk
+
+# Go to next image
 def next_img(event):
     global count
     if count >= len(images) -1:
@@ -98,11 +109,9 @@ def next_img(event):
     imgtk = load_img(count)
     tex = extract_meta()
     #Update the display
-    label['image'] = imgtk
-    label['text'] = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+" x "+rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+filetypes[count]+"\nFile size: "+str(os.lstat(images[count]).st_size)+" bytes"
-    label.photo = imgtk
-        
-# Go to prior image    
+    update_window(imgtk, tex)
+
+# Go to prior image
 def prev_img(event):
     global count
     if count <= 0:
@@ -111,9 +120,7 @@ def prev_img(event):
     imgtk = load_img(count)
     tex = extract_meta()
     #Update the display
-    label['image'] = imgtk
-    label['text'] = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+" x "+rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+filetypes[count]+"\nFile size: "+str(os.lstat(images[count]).st_size)+" bytes"
-    label.photo = imgtk
+    update_window(imgtk, tex)
 
 # Blur the image using Gaussianblur
 def blur_img(event):
@@ -121,10 +128,8 @@ def blur_img(event):
     imgtk = convert_img(cv2.GaussianBlur(opencv_img(count), (15, 15), cv2.BORDER_DEFAULT))
     tex = extract_meta()
     #Update the display
-    label['image'] = imgtk
-    label['text'] = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+" x "+rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+filetypes[count]+"\nFile size: "+str(os.lstat(images[count]).st_size)+" bytes"
-    label.photo = imgtk 
-    
+    update_window(imgtk, tex)
+
 
 # Apply an affine transformation
 def affine_trans(event):
@@ -137,15 +142,14 @@ def affine_trans(event):
     imgtk = convert_img(dst)
     tex = extract_meta()
     #Update the display
-    label['image'] = imgtk
-    label['text'] = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+" x "+rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+filetypes[count]+"\nFile size: "+str(os.lstat(images[count]).st_size)+" bytes"
-    label.photo = imgtk
-                 
-#Exit the program  
+    update_window(imgtk, tex)
+
+#Exit the program
 def quit_img(event):
     root.destroy() #Kill the display
     sys.exit(0)
 
+# ?
 def extract_meta():
     global count
     ind = images[count].rindex("/")
@@ -159,7 +163,8 @@ def extract_meta():
 
 
 def main():
-    
+
+    #Get the command arguments
     args = get_args()
 
     # Root window
@@ -169,15 +174,19 @@ def main():
     imgtk = load_img(count)
     tex = extract_meta()
 
-    # Put it in the display window
+    # Put everything in the display window
     global label
-    label = Label(root, text = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+" x "+rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+filetypes[count]+"\nFile size: "+str(os.lstat(images[count]).st_size)+" bytes", compound = RIGHT, image=imgtk)
+    label = Label(root, text = tex[1]+"\nfrom "+tex[0]+"\n"+columns[count]+ \
+    " x " +rows[count]+" ("+pixels[count]+" pixels)\nImage type: "+ \
+    filetypes[count]+"\nFile size: "+str(os.lstat(images[count]).st_size)+ \
+    " bytes", compound = RIGHT, image=imgtk)
     label.pack()
 
 
     frame = Frame()
     frame.pack()
 
+    # Button for prior image
     btn_previous = Button(
         master = frame,
         text = "Previous",
@@ -186,6 +195,7 @@ def main():
     btn_previous.grid(row = 0, column = 0)
     btn_previous.bind('<ButtonRelease-1>', prev_img)
 
+    #Does this need to be removed?
     btn_metadata = Button(
         master = frame,
         text = "Metadata",
@@ -194,6 +204,7 @@ def main():
     btn_metadata.grid(row = 0, column = 1)
     btn_metadata.bind('<ButtonRelease-1>', meta)
 
+    # Button to perform a ??? transformation
     btn_affine = Button(
         master = frame,
         text = "AffineT",
@@ -202,6 +213,7 @@ def main():
     btn_affine.grid(row = 0, column = 2)
     btn_affine.bind('<ButtonRelease-1>', affine_trans)
 
+    # Button for next image
     btn_next = Button(
         master = frame,
         text = "Next",
@@ -210,6 +222,7 @@ def main():
     btn_next.grid(row = 0, column = 3)
     btn_next.bind('<ButtonRelease-1>', next_img)
 
+    # Bind all the required keys to functions
     root.bind('<n>', next_img)
     root.bind('<m>', meta)
     root.bind("<p>", prev_img)
