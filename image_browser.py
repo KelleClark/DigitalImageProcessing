@@ -13,7 +13,7 @@ import filetype
 images = []
 # to store the image file types
 filetypes = []
-#??
+# dimensions of each image, stored as strings
 columns = []
 rows = []
 pixels = []
@@ -45,7 +45,7 @@ def load_path(path):
             if cv2.haveImageReader(pos_img): # if it is a readable image
                 images.append(pos_img)  #add it to the list of images
                 filetypes.append(filetype.guess(pos_img).mime) #Get the file type and save it
-                #???
+                # add placeholders for image column count, row count, and pixel count to lists
                 columns.append("")
                 rows.append("")
                 pixels.append("")
@@ -59,14 +59,27 @@ def load_path(path):
 def opencv_img(count):
     # read and convert image
     image = cv2.imread(images[count])
-    columns[count] = str(image.shape[1])
-    rows[count] = str(image.shape[0])
-    pixels[count] = str(image.shape[1] * image.shape[0])
+    columns[count] = str(image.shape[1]) # add column count to list
+    rows[count] = str(image.shape[0]) # add row count to list
+    pixels[count] = str(image.shape[1] * image.shape[0]) # add pixel count to list
+
+    # Set scale multiplier to the lowest of the following values:
+    # 1
+    # window row count / image row count
+    # window column count / image column count
     scale = min(1, min(get_args().rows / image.shape[0], get_args().cols / image.shape[1]))
+
+    # Set triangle corners used for affine transformation to top left, top right, and bottom left corners of image
     srcTri = np.array([[0, 0], [image.shape[1] - 1, 0], [0, image.shape[0] - 1]]).astype(np.float32)
+
+    # Set location of top right and bottom left corners of resized image
     dstTri = np.array( [[0, 0], [int(image.shape[1] * scale), 0], [0, int(image.shape[0] * scale)]] ).astype(np.float32)
+
+    # Perform affine transformation to resize image
     warp_mat = cv2.getAffineTransform(srcTri, dstTri)
     image = cv2.warpAffine(image, warp_mat, (image.shape[1], image.shape[0]))
+
+    # Trim black border from resized image
     image = image[0:int(image.shape[0] * scale), 0:int(image.shape[1] * scale)]
     return(image)
 
@@ -86,7 +99,7 @@ def load_img(count):
 # Show metadata
 def meta(event):
     global count
-    impath  = images[count]
+    impath = images[count]
     info = os.lstat(impath)
     showinfo("Image Metadata", info)
 
@@ -135,10 +148,18 @@ def blur_img(event):
 def affine_trans(event):
     global count
     src = cv2.cvtColor(opencv_img(count), cv2.COLOR_BGR2RGB)
+
+    # Set triangle corners used for affine transformation to top left, top right, and bottom left corners of image
     srcTri = np.array( [[0, 0], [src.shape[1] - 1, 0], [0, src.shape[0] - 1]] ).astype(np.float32)
+
+    # Set new locations of top left, top right, and bottom left corners of resized image
     dstTri = np.array( [[0, src.shape[1]*0.33], [src.shape[1]*0.85, src.shape[0]*0.25], [src.shape[1]*0.15, src.shape[0]*0.7]] ).astype(np.float32)
+
+    # Perform affine transformation
     warp_mat = cv2.getAffineTransform(srcTri, dstTri)
     dst = cv2.warpAffine(src, warp_mat,(src.shape[1],src.shape[0]))
+
+    # Convert image to Tk format
     imgtk = convert_img(dst)
     tex = extract_meta()
     #Update the display
@@ -149,7 +170,7 @@ def quit_img(event):
     root.destroy() #Kill the display
     sys.exit(0)
 
-# ?
+# Gets filename and file location
 def extract_meta():
     global count
     ind = images[count].rindex("/")
@@ -182,7 +203,7 @@ def main():
     " bytes", compound = RIGHT, image=imgtk)
     label.pack()
 
-
+    # Frame to display navigation buttons at bottom of window
     frame = Frame()
     frame.pack()
 
@@ -195,16 +216,16 @@ def main():
     btn_previous.grid(row = 0, column = 0)
     btn_previous.bind('<ButtonRelease-1>', prev_img)
 
-    #Does this need to be removed?
-    btn_metadata = Button(
+    # Button to blur image
+    btn_blur = Button(
         master = frame,
-        text = "Metadata",
+        text = "Blur",
         underline = 0
     )
-    btn_metadata.grid(row = 0, column = 1)
-    btn_metadata.bind('<ButtonRelease-1>', meta)
+    btn_blur.grid(row = 0, column = 1)
+    btn_blur.bind('<ButtonRelease-1>', blur_img)
 
-    # Button to perform a ??? transformation
+    # Button to perform an affine transformation and color conversion
     btn_affine = Button(
         master = frame,
         text = "AffineT",
@@ -224,10 +245,10 @@ def main():
 
     # Bind all the required keys to functions
     root.bind('<n>', next_img)
-    root.bind('<m>', meta)
     root.bind("<p>", prev_img)
     root.bind("<q>", quit_img)
     root.bind("<b>", blur_img)
+    root.bind("<a>", affine_trans)
 
     root.mainloop() # Start the GUI
 
