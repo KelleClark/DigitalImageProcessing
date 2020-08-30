@@ -334,8 +334,7 @@ documents are seperate.
 | provided feedback |                 |               |               |
 | positive attitude |                 |               |               |
 
-  : Team Assessment.
-:::
+### Team Assessment
 
 The rubric for scoring is given in the following image:
 
