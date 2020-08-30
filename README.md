@@ -1,14 +1,12 @@
----
-author:
-- 'Elizabeth Chilcoat, Kelle Clark, Michael Heath'
-title: Image Browser Project Documentation
----
+# Image Browser Project Documentation
 
-Usage and System Dependencies
-=============================
+Elizabeth Chilcoat, Kelle Clark, Michael Heath
 
-Dependencies
-------------
+## Usage and System Dependencies
+
+
+### Dependencies
+
 
 The user should check to see if the following libraries are installed or
 do a batch install with
@@ -38,8 +36,7 @@ If only one or two libraries are missing, they can be added with:
     pip install pillow\\
     pip3 install pillow\\
 
-Usage
------
+### Usage
 
 To run in the command line:
 
@@ -64,17 +61,14 @@ image_browser  name of the executable
 ```
 
 ![\"Command line instructions for running the
-program\"](images/runningImageBrowser.PNG){#Fig:CreateCourse
-width=".95\\textwidth"}
+program\"](images/runningImageBrowser.PNG)
 
-User Requirements Log
-=====================
+## User Requirements Log
 
 The design, implementation and testing of the system are based on
 satisfying the following stated user requirements.
 
-Requirements regarding reading all images in given directory/subdirectory:
---------------------------------------------------------------------------
+### Requirements regarding reading all images in given directory/subdirectory:
 
 1.  Given a directory, display each picture in the directory as well as
     in its subdirectories.
@@ -91,8 +85,7 @@ Requirements regarding reading all images in given directory/subdirectory:
 3.  The GUI should enable browsing of images which are stored in a
     hierarchically structured directory tree in depth-first order.
 
-Requirements regarding execution, input and messages:
------------------------------------------------------
+### Requirements regarding execution, input and messages:
 
 1.  The system should be invoked using the following command:\
 
@@ -137,8 +130,7 @@ Requirements regarding execution, input and messages:
     The parameters prefixed with the - (dash) are optional. You are free
     to use long parameter names such as --rows for -r
 
-Requirements regarding the GUI functionality:
----------------------------------------------
+### Requirements regarding the GUI functionality:
 
 1.  Include a simple Graphical User Interface, GUI, for browsing images.
 
@@ -162,15 +154,13 @@ Requirements regarding the GUI functionality:
     transformation function of OpenCV that will preserve the aspect
     ratio.
 
-Requirements regarding exception handling:
-------------------------------------------
+### Requirements regarding exception handling:
 
 1.  Any exceptions should be handled by the system, so that the program
     will always either execute as expected or exit. An error message of
     why the system exited is optional.
 
-Requirement to use OpenCV library:
-----------------------------------
+### Requirement to use OpenCV library:
 
 1.  The project should demonstrate the team's level of familiar with
     OpenCV, specifically with the tasks of
@@ -183,8 +173,7 @@ Requirement to use OpenCV library:
 
     4.  performing Affine transforms on the image
 
-Software Model, Development Methodology
-=======================================
+## Software Model, Development Methodology
 
 The team used the Iterative Software Engineering model with some
 features of the Integrate and Configure Model to perform the tasks of
@@ -208,21 +197,17 @@ general architecture of the system which includes both implemented
 functionality and proposed future functionality:
 
 ![\"Command line instructions for running the
-program\"](images/imagebrowserarch.png){#Fig:CreateCourse
-width=".95\\textwidth"}
+program\"](images/imagebrowserarch.png)
 
-Testing the System
-==================
+## Testing the System
 
 A directory was created for testing that included empty files, files of
 varying types (HTML, PDF, Word) and images stored in different formats:
 
 ![\"Command line instructions for running the
-program\"](images/TestFileHierarchy.PNG){#Fig:CreateCourse
-width=".95\\textwidth"}
+program\"](images/TestFileHierarchy.PNG)
 
-Test Objective: Given a directory, does the system read in and display all images in the hierarchy in a top-down traversal?
----------------------------------------------------------------------------------------------------------------------------
+### Test Objective: Given a directory, does the system read in and display all images in the hierarchy in a top-down traversal?
 
 Test ran
 
@@ -231,8 +216,7 @@ Test ran
 Test result: Image browser popped up with butterfly.png and traversed
 into directories and sub-directory in top-down order
 
-Test Objective: Given a directory, does the system preserve the aspect ration of the users OS and ensure that the image fits inside the window. (Platforms checked: Windows and MacOS X)
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### Test Objective: Given a directory, does the system preserve the aspect ration of the users OS and ensure that the image fits inside the window. (Platforms checked: Windows and MacOS X)
 
 Test ran
 
@@ -243,8 +227,7 @@ images fit inside the window of the image browser and the aspect ration
 was preserved. (after finding that it did not and changes were made to
 the code :))
 
-Test Objective: Is the metadata for each image displayed in the browser including name and size?
-------------------------------------------------------------------------------------------------
+### Test Objective: Is the metadata for each image displayed in the browser including name and size?
 
 Test ran
 
@@ -254,8 +237,7 @@ Test result: Metadata is displayed on the split pane of the browser,
 including file path. A button is included that returns the content
 relevant to the operating system and the file.
 
-Test Objective: Determine what happens at the end case where a file is given as dir that is not an image.
----------------------------------------------------------------------------------------------------------
+### Test Objective: Determine what happens at the end case where a file is given as dir that is not an image.
 
 Test ran
 
@@ -265,8 +247,7 @@ Test result:
 
     Invalid path or there are no images in path
 
-Test Objective: Determine what happens if user does not enter in required parameter dir
----------------------------------------------------------------------------------------
+### Test Objective: Determine what happens if user does not enter in required parameter dir
 
 Test ran
 
@@ -277,8 +258,7 @@ Test result:
     usage: image_browser.py [-h] [--rows ROWS] [--cols COLS] dir
     image_browser.py: error: the following arguments are required: dir
 
-Testing Objective: What is the result of using the optional -h flag?
---------------------------------------------------------------------
+### Testing Objective: What is the result of using the optional -h flag?
 
 Test ran
 
@@ -298,8 +278,7 @@ Test result:
       --rows ROWS  Max number of rows on screen (Default is 720)
       --cols COLS  Max number of columns on screen (Default is 1080)
 
-Testing Objective: Is the user able to traverse the images using 'n' for next, 'p' for previous including handling going back to the beginning of the slides when at the end and to the beginning of the slide show when at the end. In addition can the user quit with q?
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### Testing Objective: Is the user able to traverse the images using 'n' for next, 'p' for previous including handling going back to the beginning of the slides when at the end and to the beginning of the slide show when at the end. In addition can the user quit with q?
 
 Test ran
 
@@ -309,8 +288,7 @@ Test results: Successful traversal from beginning to end using 'n',
 going backwards with 'p', moving from end to beginning, moving from
 beginning to end. The application terminates with 'q.'
 
-Testing Objective: Did the team use OpenCv techniques and Affine transformations in their implementation?
----------------------------------------------------------------------------------------------------------
+### Testing Objective: Did the team use OpenCv techniques and Affine transformations in their implementation?
 
 Test ran
 
@@ -322,8 +300,7 @@ transformed to a new image that is \"sheared\" so that the pixels
 neighbors are preserved with but the locations are all shifted relative
 to a new position.
 
-Testing Objective: Can the user enter in a specified max number of columns and rows with the optional flags?
-------------------------------------------------------------------------------------------------------------
+### Testing Objective: Can the user enter in a specified max number of columns and rows with the optional flags?
 
 Test ran
 
@@ -333,16 +310,14 @@ Test result: Using such a small maximum row and col size (both equal),
 it was noted that the image was always square and very small\...but the
 entire image stayed in the browser.
 
-Reflecting on the learning experience and teamwork
-==================================================
+## Reflecting on the learning experience and teamwork
 
 Reflect on your solution to the problem and the learning experience
 through this project. Trust building, cohesion, and psychological safety
 are the foundations elements of teamwork. Reflect on the team dynamic
 experienced in this project.
 
-Team member contribution/effort assessment
-------------------------------------------
+### Team member contribution/effort assessment
 
 The following rubric is used by the members of the team in order to rate
 themselves and their teams members on a scale of 1 to 5 about their
@@ -365,4 +340,4 @@ documents are seperate.
 The rubric for scoring is given in the following image:
 
 ![\"Team member assessment
-rubric\"](images/rheubric.PNG){#Fig:CreateCourse width=".95\\textwidth"}
+rubric\"](images/rheubric.PNG)
