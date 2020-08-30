@@ -352,7 +352,7 @@ documents are seperate.
 
 ::: {#tab:table1}
 | | **Self-assessment** | **Team member 1** | **Team member 2** |
-| :-- | :-- | :-- | :-- |
+| :--- | :--- | :--- | :--- |
 | attended meetings | | | |
 | communicated | | | |
 | participated | | | |
