@@ -351,7 +351,7 @@ being outstanding). Rationale should be provided for each rating. These
 documents are seperate.
 
 ::: {#tab:table1}
-|                   | Self-assessment | Team member 1 | Team member 2 |
+| &nbsp;            | Self-assessment | Team member 1 | Team member 2 |
 | ----------------- | --------------- | ------------- | ------------- |
 | attended meetings |                 |               |               |
 | communicated      |                 |               |               |
