@@ -350,8 +350,7 @@ individual contribution to the project (a rating of 1 being poor and 5
 being outstanding). Rationale should be provided for each rating. These
 documents are seperate.
 
-::: {#tab:table1}
-|                   | Self-assessment | Team member 1 | Team member 2 |
+| GRADING RUBRIC    | Self-assessment | Team member 1 | Team member 2 |
 | ----------------- | --------------- | ------------- | ------------- |
 | attended meetings |                 |               |               |
 | communicated      |                 |               |               |
