@@ -352,12 +352,12 @@ documents are seperate.
 
 | GRADING RUBRIC    | Self-assessment | Team member 1 | Team member 2 |
 | ----------------- | --------------- | ------------- | ------------- |
-| attended meetings | -               | -             | -             |
-| communicated      | -               | -             | -             |
-| participated      | -               | -             | -             |
-| contributed       | -               | -             | -             |
-| provided feedback | -               | -             | -             |
-| positive attitude | -               | -             | -             |
+| attended meetings |                 |               |               |
+| communicated      |                 |               |               |
+| participated      |                 |               |               |
+| contributed       |                 |               |               |
+| provided feedback |                 |               |               |
+| positive attitude |                 |               |               |
 
   : Team Assessment.
 :::
